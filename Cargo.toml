@@ -1,0 +1,10 @@
+[package]
+name = "mc-server-scanner"
+version = "1.0.0"
+authors = ["Wojciech Paruch <gpewojan1@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+craftping = { version = "0", features = ["async-tokio"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "time"] }
+base64 = "0"
