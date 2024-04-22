@@ -3,7 +3,6 @@ name = "mc-server-scanner"
 version = "1.0.0"
 authors = ["Wojciech Paruch <gpewojan1@gmail.com>"]
 license = "GPL-3.0-only"
-license-file = "LICENSE.txt"
 edition = "2021"
 
 [[bin]]
