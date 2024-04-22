@@ -2,9 +2,23 @@
 name = "mc-server-scanner"
 version = "1.0.0"
 authors = ["Wojciech Paruch <gpewojan1@gmail.com>"]
+license = "GPL-3.0-only"
+license-file = "LICENSE.txt"
 edition = "2021"
+
+[[bin]]
+name = "pinger"
+path = "src/pinger.rs"
+
+[[bin]]
+name = "html-gui-server"
+path = "src/html-gui-server.rs"
 
 [dependencies]
 craftping = { version = "0", features = ["async-tokio"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "time"] }
+bincode = "1"
+serde = "1"
+actix-web = "4"
+html-escape = "0"
 base64 = "0"
