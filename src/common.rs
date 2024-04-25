@@ -4,5 +4,5 @@ pub const SERVER_LIST_PATH: &str = "./data/server-list.dat";
 pub struct ServerListEntry {
     pub ip: String,
     pub port: String,
-    pub ping_response: Result<craftping::Response, ()>
+    pub ping_response: Option<craftping::Response>
 }

@@ -1,4 +1,5 @@
 /Cargo.lock
 /target/
 /data/masscan-list.txt
+/data/paused.conf
 /data/server-list.dat

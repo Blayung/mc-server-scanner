@@ -5,18 +5,18 @@ use std::io::BufRead;
 const MASSCAN_LIST_PATH: &str = "./data/masscan-list.txt";
 const PING_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(1);
 
-async fn ping_server(ip: &str, port: u16) -> Result<craftping::Response, ()> {
-    Ok(match match tokio::time::timeout(PING_TIMEOUT, craftping::tokio::ping(&mut match match tokio::time::timeout(PING_TIMEOUT, tokio::net::TcpStream::connect((ip, port))).await {
-        Err(_) => return Err(()),
+async fn ping_server(ip: &str, port: u16) -> Option<craftping::Response> {
+    Some(match match tokio::time::timeout(PING_TIMEOUT, craftping::tokio::ping(&mut match match tokio::time::timeout(PING_TIMEOUT, tokio::net::TcpStream::connect((ip, port))).await {
+        Err(_) => return None,
         Ok(tcp_stream_result) => tcp_stream_result
     } {
-        Err(_) => return Err(()),
+        Err(_) => return None,
         Ok(tcp_stream) => tcp_stream
     }, ip, port)).await {
-        Err(_) => return Err(()),
+        Err(_) => return None,
         Ok(ping_result) => ping_result
     } {
-        Err(_) => return Err(()),
+        Err(_) => return None,
         Ok(ping_response) => ping_response
     })
 }
@@ -55,4 +55,6 @@ async fn main() {
 
         std::fs::write(common::SERVER_LIST_PATH, bincode::serialize(&server_list).unwrap()).unwrap();
     }
+
+    println!("Finished! (100%)");
 }

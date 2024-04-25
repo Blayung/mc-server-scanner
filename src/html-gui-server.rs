@@ -24,8 +24,8 @@ async fn main() {
             server_list_html.push_str(&entry.port);
             server_list_html.push_str("</th><th>");
             match entry.ping_response {
-                Err(()) => server_list_html.push_str("ERROR"),
-                Ok(ping_response) => {
+                None => server_list_html.push_str("ERROR"),
+                Some(ping_response) => {
                     server_list_html.push_str("OK</th><th>");
                     server_list_html.push_str(&html_escape::encode_text(&ping_response.version));
                     server_list_html.push_str("</th><th>");
