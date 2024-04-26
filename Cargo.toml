@@ -1,6 +1,6 @@
 [package]
 name = "mc-server-scanner"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Wojciech Paruch <gpewojan1@gmail.com>"]
 license = "GPL-3.0-only"
 edition = "2021"
@@ -10,8 +10,8 @@ name = "pinger"
 path = "src/pinger.rs"
 
 [[bin]]
-name = "html-gui-server"
-path = "src/html-gui-server.rs"
+name = "server-list"
+path = "src/server-list.rs"
 
 [dependencies]
 craftping = { version = "0", features = ["async-tokio"] }

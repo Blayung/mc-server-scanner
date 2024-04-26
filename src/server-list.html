@@ -2,17 +2,84 @@
 <html>
     <head>
         <meta charset='UTF-8'>
-        <title>Minecraft Server List</title>
+        <title>Server List</title>
         <style>
-            table, th, td {{
-                border: 1px solid black;
+            body {{
+                background-color: #222222;
+                color: #eeeeee;
+            }}
+
+            th, td {{
+                border: 1px solid;
+                padding: 3px;
+            }}
+
+            table {{
                 border-collapse: collapse;
             }}
         </style>
     </head>
     <body>
-        <table><tbody>
-            <tr>
+        <script>
+            let showingErrors = true;
+
+            function switchErrors() {{
+                const serverList = document.getElementById('serverList').children;
+
+                if (showingErrors) {{
+                    showingErrors = false;
+
+                    document.getElementById('serverListHead').children[2].style.display = 'none';
+
+                    for (const serverListEntry of serverList) {{
+                        const serverListEntryElements = serverListEntry.children;
+
+                        serverListEntryElements[2].style.display = 'none';
+
+                        if (serverListEntryElements.length === 3) {{
+                            serverListEntry.style.display = 'none';
+                        }}
+                    }}
+                }} else {{
+                    showingErrors = true;
+
+                    document.getElementById('serverListHead').children[2].style.display = '';
+
+                    for (const serverListEntry of serverList) {{
+                        serverListEntry.style.display = '';
+                        serverListEntry.children[2].style.display = '';
+                    }}
+                }}
+            }}
+
+            let showingForgeData = true;
+
+            function switchForgeData() {{
+                showingForgeData = !showingForgeData;
+
+                const displayValue = showingForgeData ? '' : 'none';
+
+                const serverListHead = document.getElementById('serverListHead').children;
+                serverListHead[12].style.display = displayValue;
+                serverListHead[13].style.display = displayValue;
+
+                for (const serverListEntry of document.getElementById('serverList').children) {{
+                    const serverListEntryElements = serverListEntry.children;
+                    if (serverListEntryElements.length === 14) {{
+                        serverListEntryElements[12].style.display = displayValue;
+                        serverListEntryElements[13].style.display = displayValue;
+                    }}
+                }}
+            }}
+        </script>
+        <label for='showErrors'>Show Errorneous Entries</label>
+        <input type='checkbox' id='showErrors' checked onclick='switchErrors()'>
+        <br>
+        <label for='showForgeData'>Show Forge Data</label>
+        <input type='checkbox' id='showForgeData' checked onclick='switchForgeData()'>
+        <br><br>
+        <table>
+            <thead><tr id='serverListHead'>
                 <th>IP Address</th>
                 <th>Port</th>
                 <th>Status</th>
@@ -27,8 +94,8 @@
                 <th>Previews Chat?</th>
                 <th>Forge Data</th>
                 <th>Old Forge Data</th>
-            </tr>
-            {}
+            </tr></thead>
+            <tbody id='serverList'>{}</tbody>
         </tbody></table>
     </body>
 </html>
