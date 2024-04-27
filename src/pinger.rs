@@ -3,19 +3,17 @@ mod config;
 use std::io::BufRead;
 
 async fn ping_server(ip: &str, port: u16) -> Option<craftping::Response> {
-    Some(match match tokio::time::timeout(config::PING_TIMEOUT, craftping::tokio::ping(&mut match match tokio::time::timeout(config::PING_TIMEOUT, tokio::net::TcpStream::connect((ip, port))).await {
-        Err(_) => return None,
-        Ok(tcp_stream_result) => tcp_stream_result
-    } {
-        Err(_) => return None,
-        Ok(tcp_stream) => tcp_stream
-    }, ip, port)).await {
-        Err(_) => return None,
-        Ok(ping_result) => ping_result
-    } {
-        Err(_) => return None,
-        Ok(ping_response) => ping_response
-    })
+    tokio::time::timeout(
+        config::PING_TIMEOUT,
+        craftping::tokio::ping(
+            &mut tokio::time::timeout(
+                config::PING_TIMEOUT,
+                tokio::net::TcpStream::connect((ip, port))
+            ).await.ok()?.ok()?,
+            ip,
+            port
+        )
+    ).await.ok()?.ok()
 }
 
 #[tokio::main]
