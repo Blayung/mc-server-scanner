@@ -2,4 +2,4 @@
 /target/
 /data/masscan-list.txt
 /data/paused.conf
-/data/server-list.dat
+/data/server-list/
