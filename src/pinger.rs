@@ -72,7 +72,7 @@ async fn main() {
 
         if should_close.load(std::sync::atomic::Ordering::Relaxed) {
             println!("Pausing...");
-            std::fs::write(config::RESUME_FILE_PATH, line_num.to_string().as_bytes()).unwrap();
+            std::fs::write(config::RESUME_FILE_PATH, (line_num + 1).to_string().as_bytes()).unwrap();
             return;
         }
     }
