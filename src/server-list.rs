@@ -12,16 +12,24 @@ fn mc_text_to_string(mut text: craftping::Chat) -> String {
 #[actix_web::main]
 async fn main() {
     actix_web::HttpServer::new(|| actix_web::App::new().route("/", actix_web::web::get().to(|| async {
-        let server_list: Vec<common::ServerListEntry> = bincode::deserialize(&std::fs::read(config::SERVER_LIST_PATH).unwrap()).unwrap();
-
         let mut server_list_html = String::new();
-        for entry in server_list {
+
+        for dir_entry in std::fs::read_dir(config::SERVER_LIST_PATH).unwrap() {
+            let dir_entry = dir_entry.unwrap();
+
+            let file_name = dir_entry.file_name();
+            let mut splitted_file_name = file_name.to_str().unwrap().split(' ');
+
+            let ip = splitted_file_name.next().unwrap();
+            let port = splitted_file_name.next().unwrap();
+
             server_list_html.push_str("<tr><td>");
-            server_list_html.push_str(&entry.ip);
+            server_list_html.push_str(ip);
             server_list_html.push_str("</td><td>");
-            server_list_html.push_str(&entry.port);
+            server_list_html.push_str(port);
             server_list_html.push_str("</td><td>");
-            match entry.ping_response {
+
+            match bincode::deserialize::<Option<craftping::Response>>(&std::fs::read(dir_entry.path()).unwrap()).unwrap() {
                 None => server_list_html.push_str("ERROR"),
                 Some(ping_response) => {
                     server_list_html.push_str("OK</td><td>");
@@ -78,6 +86,7 @@ async fn main() {
                     }
                 }
             }
+
             server_list_html.push_str("</td></tr>");
         }
 

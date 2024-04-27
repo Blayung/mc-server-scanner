@@ -1,4 +1,4 @@
-pub const SERVER_LIST_PATH: &str = "./data/server-list.dat";
+pub const SERVER_LIST_PATH: &str = "./data/server-list";
 
 pub const MASSCAN_LIST_PATH: &str = "./data/masscan-list.txt";
 pub const RESUME_FILE_PATH: &str = "./data/resume.txt";
