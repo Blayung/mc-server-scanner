@@ -15,7 +15,7 @@ path = "src/server-list.rs"
 
 [dependencies]
 craftping = { version = "0", features = ["async-tokio"] }
-tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "time"] }
+tokio = { version = "1", features = ["full"] }
 ctrlc = "3"
 bincode = "1"
 actix-web = "4"

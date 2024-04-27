@@ -34,17 +34,7 @@ async fn main() {
     let _should_close = should_close.clone();
     ctrlc::set_handler(move || _should_close.store(true, std::sync::atomic::Ordering::Relaxed)).unwrap();
     
-    for (line_num, line) in std::io::BufReader::new(std::fs::File::open(config::MASSCAN_LIST_PATH).unwrap())
-        .lines()
-        .enumerate()
-        .skip(match std::fs::read_to_string(config::RESUME_FILE_PATH) {
-            Ok(lines_to_skip) => match lines_to_skip.parse() {
-                Ok(lines_to_skip) => lines_to_skip,
-                Err(_) => 0
-            },
-            Err(_) => 0
-        })
-    {
+    for (line_num, line) in std::io::BufReader::new(std::fs::File::open(config::MASSCAN_LIST_PATH).unwrap()).lines().enumerate() {
         let line = line.unwrap();
         if line.starts_with('#') {
             continue;
@@ -72,7 +62,6 @@ async fn main() {
 
         if should_close.load(std::sync::atomic::Ordering::Relaxed) {
             println!("Pausing...");
-            std::fs::write(config::RESUME_FILE_PATH, (line_num + 1).to_string().as_bytes()).unwrap();
             return;
         }
     }
