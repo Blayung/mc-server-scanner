@@ -17,6 +17,7 @@ path = "src/server-list.rs"
 craftping = { version = "0", features = ["async-tokio"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "time"] }
 bincode = "1"
+ctrlc = "3"
 serde = "1"
 actix-web = "4"
 html-escape = "0"

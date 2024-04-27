@@ -1,8 +1,6 @@
-mod common;
+mod config;
 
 use base64::Engine;
-
-const SERVER_ADDRESS: &str = "127.0.0.1:8888";
 
 fn mc_text_to_string(mut text: craftping::Chat) -> String {
     for extra in text.extra {
@@ -14,7 +12,7 @@ fn mc_text_to_string(mut text: craftping::Chat) -> String {
 #[actix_web::main]
 async fn main() {
     actix_web::HttpServer::new(|| actix_web::App::new().route("/", actix_web::web::get().to(|| async {
-        let server_list: Vec<common::ServerListEntry> = bincode::deserialize(&std::fs::read(common::SERVER_LIST_PATH).unwrap()).unwrap();
+        let server_list: Vec<common::ServerListEntry> = bincode::deserialize(&std::fs::read(config::SERVER_LIST_PATH).unwrap()).unwrap();
 
         let mut server_list_html = String::new();
         for entry in server_list {
@@ -84,5 +82,5 @@ async fn main() {
         }
 
         actix_web::HttpResponse::Ok().body(format!(include_str!("server-list.html"), server_list_html))
-    }))).bind(SERVER_ADDRESS).unwrap().run().await.unwrap();
+    }))).bind(config::SERVER_ADDRESS).unwrap().run().await.unwrap();
 }
