@@ -9,4 +9,4 @@
 3. Start the http server with the server list with `cargo run --bin server-list`.
 4. View the server list by going to `http://localhost:8888` in your browser.
 ### You can also configure the program a bit in `src/config.rs`.
-### This scanner currently pings the servers synchronously, one-by-one, so it might be a little slower than an asyncronous implementation, but from my experience, it'll scan all the open 25565 ports in the ipv4 internet in ~16h.
+### This scanner currently pings the servers synchronously, one-by-one, so it might be a little slower than an asyncronous implementation, but from my experience, it'll scan all the open 25565 ports in the ipv4 internet in ~16h. (+ it won't hog your network down as a bonus)
