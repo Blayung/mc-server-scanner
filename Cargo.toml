@@ -1,6 +1,6 @@
 [package]
 name = "mc-server-scanner"
-version = "1.1.1"
+version = "1.1.2"
 authors = ["Wojciech Paruch <gpewojan1@gmail.com>"]
 license = "GPL-3.0-only"
 edition = "2021"
